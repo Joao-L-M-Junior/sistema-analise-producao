@@ -1,30 +1,31 @@
 # 📊 Sistema de Análise de Produção Industrial & SQL
 
-Projeto em Python desenvolvido para automação de relatórios de produção por turno, cálculo de métricas de eficiência operacional e integração relacional utilizando **SQLite** e **Pandas**.
+Pipeline de ETL e análise de dados em Python desenvolvido para consolidação de produção industrial por turno, persistência relacional em **SQLite**, cálculo de indicadores de eficiência com **Pandas** e geração automatizada de relatórios e gráficos.
 
 ## 🚀 Funcionalidades
 
-- **Cálculo de Eficiência Operacional:** Processamento automatizado de metas vs. produção realizada.
-- **Estruturação Tabular:** Transformação dos relatórios com a biblioteca Pandas.
-- **Modelagem SQL (SQLite):** Persistência dos dados brutos e consultas agregadas em banco relacional.
-- **Exportação de Dados:** Geração automática de relatórios em formato CSV.
+- **Modelagem Relacional (SQLite):** Armazenamento normalizado entre metas e registros diários de produção por turno com integridade referencial (`FOREIGN KEY`).
+- **Consolidação SQL + Regras de Negócio em Python:** Agregação de volumes no banco de dados e cálculo de saldo de meta, eficiência percentual e status operacional via Pandas.
+- **Visualização Executiva:** Geração automática de painel comparativo (`dashboard_producao.png`) confrontando produção realizada, metas e eficiência.
+- **Exportação Tabular:** Geração dos relatórios `relatorio_consolidado.csv` e `relatorio_producao.csv`.
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Python 3.14** — Regras de negócio e processamento principal.
-* **Pandas** — Manipulação e exportação de dados tabulares.
-* **SQLite3** — Armazenamento e execução de consultas relacionais.
+* **Python 3.x** — Orquestração do pipeline e regras de negócio.
+* **SQLite3** — Banco de dados relacional e consultas agregadas.
+* **Pandas** — Transformação de dados, classificação de indicadores e exportação CSV.
+* **Matplotlib** — Criação de gráficos comparativos.
 
-## 🗄️ Estrutura do Banco de Dados
+## 🗄️ Consulta SQL de Consolidação
 
-O banco de dados relacional (`fabrica.db`) utiliza a seguinte consulta SQL para consolidação dos resultados:
+O banco de dados (`fabrica.db`) realiza a agregação inicial da produção antes do processamento analítico no Pandas:
 
 ```sql
 SELECT 
     p.produto AS Produto,
     SUM(p.quantidade) AS Producao_Total,
-    m.meta_quantidade AS Meta,
-    ROUND((CAST(SUM(p.quantidade) AS FLOAT) / m.meta_quantidade) * 100, 2) AS Eficiencia_Porcentagem
+    m.meta_quantidade AS Meta
 FROM producao_diaria p
 JOIN metas m ON p.produto = m.produto
 GROUP BY p.produto;
+```
