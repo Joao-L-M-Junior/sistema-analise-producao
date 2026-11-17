@@ -29,3 +29,5 @@ FROM producao_diaria p
 JOIN metas m ON p.produto = m.produto
 GROUP BY p.produto;
 ```
+## 📈 Painel de Resultados
+![Dashboard de Produção](dashboard_producao.png)
