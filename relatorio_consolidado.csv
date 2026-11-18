@@ -1,0 +1,4 @@
+﻿Produto,Producao_Total,Meta,Saldo_Meta,Eficiencia_Pct,Status
+Tênis,1120,1000,120,112.0,Acima da Meta
+Calça,1500,1500,0,100.0,Meta Atingida
+Camiseta,1780,2000,-220,89.0,Abaixo da Meta
